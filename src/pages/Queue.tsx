@@ -76,10 +76,10 @@ export default function QueuePage() {
     }
   };
 
-  const updateStatus = async (id: string, status: string) => {
-    const updates: Record<string, any> = { status };
-    if (status === 'in-progress') updates.called_at = new Date().toISOString();
-    if (status === 'completed') updates.completed_at = new Date().toISOString();
+  const updateStatus = async (id: string, newStatus: string) => {
+    const updates: { status: string; called_at?: string; completed_at?: string } = { status: newStatus };
+    if (newStatus === 'in-progress') updates.called_at = new Date().toISOString();
+    if (newStatus === 'completed') updates.completed_at = new Date().toISOString();
     await supabase.from('queue').update(updates).eq('id', id);
     fetchData();
   };
